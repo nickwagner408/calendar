@@ -428,7 +428,7 @@
 <div id="errorBar"></div>
 
 <div class="advent-strip" id="adventStrip">
-  <h3>✦ Advent Calendar</h3>
+  <h3>? Advent Calendar</h3>
   <div class="advent-candles" id="adventCandles"></div>
 </div>
 
@@ -478,8 +478,8 @@
 </div>
 
 <div class="subscribe-bar">
-  <button class="sub-btn" onclick="alert('Subscribe feature coming soon!')">📅 Subscribe to Calendar</button>
-  <button class="sub-btn" onclick="alert('Download feature coming soon!')">⬇ Download .ics</button>
+  <button class="sub-btn" onclick="alert('Subscribe feature coming soon!')">?? Subscribe to Calendar</button>
+  <button class="sub-btn" onclick="alert('Download feature coming soon!')">? Download .ics</button>
   <span class="sub-text">Sync events to your personal calendar</span>
 </div>
 
@@ -490,8 +490,8 @@
         <div class="modal-date" id="modalDate"></div>
         <div class="modal-title" id="modalTitle"></div>
       </div>
-      <button class="modal-close" onclick="closeModalDirect()">✕</button>
-    </div>
+      <button class="modal-close" onclick="closeModalDirect()">?</button>
+    </div>D
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
@@ -566,7 +566,7 @@ async function loadEvents() {
       EVENTS[key].push({
         type:     (row.Type || 'tip').toLowerCase().trim(),
         title:    row.Title || '',
-        desc:     row.Description || '',
+        desc:     row.Description || row['Description *'] || '',
         time:     row.Time || '',
         location: row.Location || '',
         date:     row.DateRange || '',
@@ -584,7 +584,7 @@ async function loadEvents() {
   } catch (err) {
     loadingBar.classList.add('hidden');
     errorBar.classList.add('visible');
-    errorBar.innerHTML = '⚠️ Could not load calendar events. Please check your connection or Apps Script URL. &nbsp;·&nbsp; <a href="#" onclick="loadEvents();return false;" style="color:#922030">Try again</a>';
+    errorBar.innerHTML = '?? Could not load calendar events. Please check your connection or Apps Script URL. &nbsp;·&nbsp; <a href="#" onclick="loadEvents();return false;" style="color:#922030">Try again</a>';
     // Fall back to sample data so calendar still shows something
     EVENTS = getSampleEvents();
     render();
@@ -722,11 +722,11 @@ function openDay(year,month,day) {
   let body = '';
   evs.forEach(e => {
     const t = EVENT_TYPES[e.type]||EVENT_TYPES.tip;
-    const vid = e.hasVideo ? `<div class="video-placeholder">${e.videoUrl ? `<a href="${e.videoUrl}" target="_blank" style="text-decoration:none"><div class="play-icon">▶</div><span style="color:var(--teal)">Watch Video →</span></a>` : `<div class="play-icon">▶</div><span>Video available to members</span>`}</div>` : '';
-    const lnk = e.hasLink ? `<a href="${e.linkUrl||'#'}" target="_blank" class="modal-event-link">📖 Open in Faith·Life·Creed →</a>` : '';
-    const tm  = e.time     ? `<div class="modal-meta">🕐 ${e.time}</div>` : '';
-    const loc = e.location ? `<div class="modal-meta">📍 ${e.location}</div>` : '';
-    const dt  = e.date     ? `<div class="modal-meta">📅 ${e.date}</div>` : '';
+    const vid = e.hasVideo ? `<div class="video-placeholder">${e.videoUrl ? `<a href="${e.videoUrl}" target="_blank" style="text-decoration:none"><div class="play-icon">?</div><span style="color:var(--teal)">Watch Video ?</span></a>` : `<div class="play-icon">?</div><span>Video available to members</span>`}</div>` : '';
+    const lnk = e.hasLink ? `<a href="${e.linkUrl||'#'}" target="_blank" class="modal-event-link">?? Open in Faith·Life·Creed ?</a>` : '';
+    const tm  = e.time     ? `<div class="modal-meta">?? ${e.time}</div>` : '';
+    const loc = e.location ? `<div class="modal-meta">?? ${e.location}</div>` : '';
+    const dt  = e.date     ? `<div class="modal-meta">?? ${e.date}</div>` : '';
     body += `<div class="modal-event">
       <div class="modal-event-type" style="color:${t.color}"><div style="width:7px;height:7px;border-radius:50%;background:${t.color};flex-shrink:0"></div>${t.label}</div>
       <div class="modal-event-title">${e.title}</div>
