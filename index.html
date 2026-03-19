@@ -50,7 +50,18 @@
     border-bottom: 2px solid rgba(21,164,163,0.28);
     flex-wrap: wrap;
   }
-    .header-titles h1 {
+  .logomark {
+    width: 46px; height: 46px;
+    background: var(--orange);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700; font-size: 1.15rem;
+    color: var(--deep-teal);
+    flex-shrink: 0;
+    box-shadow: 0 2px 12px rgba(247,165,30,0.3);
+  }
+  .header-titles h1 {
     font-family: 'Comfortaa', sans-serif;
     font-weight: 700;
     font-size: clamp(1.05rem, 2.5vw, 1.5rem);
@@ -64,6 +75,46 @@
     margin-top: 2px;
     letter-spacing: 0.03em;
   }
+
+  /* LOADING STATE */
+  #loadingBar {
+    position: relative; z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 24px;
+    background: rgba(21,164,163,0.08);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--teal);
+    font-style: italic;
+  }
+  #loadingBar.hidden { display: none; }
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(21,164,163,0.2);
+    border-top-color: var(--teal);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  #errorBar {
+    display: none;
+    position: relative; z-index: 10;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 24px;
+    background: rgba(200,60,60,0.08);
+    border-bottom: 1px solid rgba(200,60,60,0.2);
+    font-size: 0.8rem;
+    color: #922030;
+    font-style: italic;
+    text-align: center;
+  }
+  #errorBar.visible { display: flex; }
 
   /* CONTROLS */
   .controls {
@@ -175,7 +226,7 @@
     background: var(--bg-card-hover);
     border-color: rgba(21,164,163,0.45);
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+    box-shadow: 0 4px 14px rgba(23,65,89,0.12);
   }
   .day-cell.other-month { opacity: 0.26; cursor: default; }
   .day-cell.other-month:hover { transform: none; box-shadow: none; }
@@ -231,7 +282,7 @@
   /* MODAL */
   .modal-overlay {
     display: none; position: fixed; inset: 0;
-    background: rgba(8,18,28,0.82); z-index: 100;
+    background: rgba(23,65,89,0.4); z-index: 100;
     backdrop-filter: blur(5px);
     align-items: center; justify-content: center; padding: 20px;
   }
@@ -296,7 +347,7 @@
     display: inline-flex; align-items: center; gap: 6px;
     margin-top: 10px; padding: 6px 14px;
     background: rgba(247,165,30,0.14); border: 1px solid rgba(247,165,30,0.38);
-    border-radius: 20px; color: var(--orange);
+    border-radius: 20px; color: #8a5500;
     font-size: 0.78rem; font-family: 'Poppins', sans-serif;
     cursor: pointer; transition: background 0.18s; text-decoration: none;
   }
@@ -376,12 +427,16 @@
 <body>
 
 <header>
-  <img src="tilogo.png" alt="Team Initiation" style="width:52px;height:52px;object-fit:contain;">
+  <div class="logomark">Ti</div>
   <div class="header-titles">
     <h1>Team Initiation Liturgical Calendar</h1>
     <div class="tagline">Conversion Happens Here</div>
   </div>
 </header>
+
+<!-- Loading / error indicators -->
+<div id="loadingBar"><div class="spinner"></div>Loading calendar events…</div>
+<div id="errorBar"></div>
 
 <div class="advent-strip" id="adventStrip">
   <h3>✦ Advent Calendar</h3>
@@ -401,22 +456,22 @@
 </div>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#7dd9a0"></div>Video / Reel</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#f4a0aa"></div>Member Highlight</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#f7c96a"></div>Anniversary</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#7de0df"></div>Catechetical Tip</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#caa8f0"></div>Good Day for Rite</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#a8d8f0"></div>Faith·Life·Creed</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#5dd8d7"></div>Webinar</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#f7c070"></div>Institute</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#80d890"></div>Parish Story</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1a6b3a"></div>Video / Reel</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#922030"></div>Member Highlight</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8a5500"></div>Anniversary</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0b7070"></div>Catechetical Tip</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#5a2a90"></div>Good Day for Rite</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#005090"></div>Faith·Life·Creed</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0b6a6a"></div>Webinar</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7a4a00"></div>Institute</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1a6030"></div>Parish Story</div>
 </div>
 
 <div class="season-key">
   <span><span class="season-swatch" style="background:rgba(110,60,150,0.4)"></span>Advent</span>
   <span><span class="season-swatch" style="background:rgba(190,150,30,0.38)"></span>Christmas</span>
-  <span><span class="season-swatch" style="background:rgba(90,40,70,0.42)"></span>Lent</span>
-  <span><span class="season-swatch" style="background:rgba(210,185,20,0.34)"></span>Easter</span>
+  <span><span class="season-swatch" style="background:rgba(140,50,80,0.38)"></span>Lent</span>
+  <span><span class="season-swatch" style="background:rgba(200,170,0,0.34)"></span>Easter</span>
   <span><span class="season-swatch" style="background:rgba(21,164,163,0.25)"></span>Ordinary Time</span>
 </div>
 
@@ -434,8 +489,8 @@
 </div>
 
 <div class="subscribe-bar">
-  <button class="sub-btn" onclick="alert('In the live version, this adds the calendar to Google, Apple, or Outlook.')">📅 Subscribe to Calendar</button>
-  <button class="sub-btn" onclick="alert('In the live version, this downloads an .ics file for import.')">⬇ Download .ics</button>
+  <button class="sub-btn" onclick="alert('Subscribe feature coming soon!')">📅 Subscribe to Calendar</button>
+  <button class="sub-btn" onclick="alert('Download feature coming soon!')">⬇ Download .ics</button>
   <span class="sub-text">Sync events to your personal calendar</span>
 </div>
 
@@ -453,88 +508,142 @@
 </div>
 
 <script>
+// =====================================================
+// CONFIGURATION — PASTE YOUR SCRIPT URL HERE
+// After completing the Google Sheets setup guide,
+// replace the URL below with your own Apps Script URL.
+// =====================================================
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwNNQ7Qk1p9IamsnjbhBddxcFVataM80GX6Xj4vxiWXdBWgSTcLEznzEC7jCujl3mteBA/exec';
+
+// =====================================================
+// EVENT TYPE DEFINITIONS
+// =====================================================
 const EVENT_TYPES = {
-  video:       { label: 'Video / Reel',       color: '#7dd9a0', cls: 'type-video' },
-  highlight:   { label: 'Member Highlight',   color: '#f4a0aa', cls: 'type-highlight' },
-  anniversary: { label: 'Anniversary',        color: '#f7c96a', cls: 'type-anniversary' },
-  tip:         { label: 'Catechetical Tip',   color: '#7de0df', cls: 'type-tip' },
-  rite:        { label: 'Good Day for Rite',  color: '#caa8f0', cls: 'type-rite' },
-  sunday:      { label: 'Sunday Reflection',  color: '#f7c96a', cls: 'type-sunday' },
-  faith:       { label: 'Faith·Life·Creed',   color: '#a8d8f0', cls: 'type-faith' },
-  advent:      { label: 'Advent Calendar',    color: '#caa8e8', cls: 'type-advent' },
-  holyday:     { label: 'Holy Day Notes',     color: '#f4a0aa', cls: 'type-holyday' },
-  webinar:     { label: 'Webinar',            color: '#5dd8d7', cls: 'type-webinar' },
-  institute:   { label: 'Institute Date',     color: '#f7c070', cls: 'type-institute' },
-  parish:      { label: 'Parish Story',       color: '#80d890', cls: 'type-parish' },
+  video:       { label: 'Video / Reel',       color: '#1a6b3a', cls: 'type-video' },
+  highlight:   { label: 'Member Highlight',   color: '#922030', cls: 'type-highlight' },
+  anniversary: { label: 'Anniversary',        color: '#8a5500', cls: 'type-anniversary' },
+  tip:         { label: 'Catechetical Tip',   color: '#0b7070', cls: 'type-tip' },
+  rite:        { label: 'Good Day for Rite',  color: '#5a2a90', cls: 'type-rite' },
+  sunday:      { label: 'Sunday Reflection',  color: '#8a5500', cls: 'type-sunday' },
+  faith:       { label: 'Faith·Life·Creed',   color: '#005090', cls: 'type-faith' },
+  advent:      { label: 'Advent Calendar',    color: '#5a2a88', cls: 'type-advent' },
+  holyday:     { label: 'Holy Day Notes',     color: '#922030', cls: 'type-holyday' },
+  webinar:     { label: 'Webinar',            color: '#0b6a6a', cls: 'type-webinar' },
+  institute:   { label: 'Institute Date',     color: '#7a4a00', cls: 'type-institute' },
+  parish:      { label: 'Parish Story',       color: '#1a6030', cls: 'type-parish' },
 };
 
-const EVENTS = {
-  '2026-3-1': [
-    { type: 'sunday', title: 'Third Sunday of Lent', desc: 'Reflection: "What are the dry places in my own life, and how is Christ offering me living water?" — Read John 4:5–42 with your catechumens.' },
-    { type: 'rite', title: 'Scrutiny Sunday', desc: 'First Scrutiny — an excellent day to celebrate with your elect. Prepare the intercessions carefully and invite the assembly to embrace their role.' },
-  ],
-  '2026-3-3': [
-    { type: 'tip', title: 'Tip: Breaking Open the Word', desc: "Don't skip Breaking Open the Word after Mass dismissal. This 15-minute ritual is often where the deepest conversion happens. Use open-ended questions, not lectures." },
-  ],
-  '2026-3-5': [
-    { type: 'video', title: 'Reel: What is the Catechumenate?', desc: 'A 2-minute video to share with your parish about the beauty of the catechumenate process. Great for bulletin inserts or social media.', hasVideo: true },
-    { type: 'anniversary', title: 'Ministry Anniversary', desc: 'On this day in 2012, the RCIA Reform Network hosted its founding gathering. We celebrate 14 years of accompanying ministers!' },
-  ],
-  '2026-3-8': [
-    { type: 'sunday', title: 'Fourth Sunday of Lent — Laetare', desc: "Reflection: \"Where have I experienced God's compassionate gaze this Lent?\" Rose vestments today! Celebrate the joy amid the fast." },
-    { type: 'rite', title: 'Second Scrutiny', desc: 'The Gospel of the Man Born Blind. Prepare the elect: "What blindness am I asking Christ to heal?"' },
-    { type: 'faith', title: 'Faith·Life·Creed Link', desc: 'Chapter 7 of Faith·Life·Creed addresses the sacraments of initiation — a perfect companion reading for this week.', hasLink: true },
-  ],
-  '2026-3-10': [
-    { type: 'highlight', title: 'Member Highlight: Sr. Maria Garza', desc: 'Sr. Maria from St. Teresa Parish in Phoenix has served as RCIA director for 22 years. Hear her story of one catechumen whose journey changed her own faith.' },
-  ],
-  '2026-3-12': [
-    { type: 'webinar', title: 'Webinar: Mystagogy That Sticks', desc: 'Join us live at 7pm CT. Topic: How to keep neophytes engaged after Easter through transformative mystagogy. Registration link sent to your email.', time: '7:00 PM CT' },
-  ],
-  '2026-3-15': [
-    { type: 'sunday', title: 'Fifth Sunday of Lent', desc: '"Lazarus, come out! Where is Christ calling me out of the tomb?" — Third Scrutiny Gospel, John 11.' },
-    { type: 'rite', title: 'Third Scrutiny', desc: 'The raising of Lazarus. Invite the elect to name what is "bound" in them that Christ is loosening.' },
-    { type: 'tip', title: 'Tip: Preparing for Holy Week', desc: 'Begin this week preparing your elect for the Triduum emotionally and spiritually. The Easter Vigil can overwhelm; preview each element in advance.' },
-  ],
-  '2026-3-17': [
-    { type: 'parish', title: 'Parish Story: St. Patrick, Rolla MO', desc: "Today is the feast of St. Patrick — name day for St. Patrick Parish in Rolla, MO. Hear how their team transformed their RCIA after attending our 2024 Institute.", feast: 'Feast of St. Patrick' },
-  ],
-  '2026-3-19': [
-    { type: 'holyday', title: 'Feast of St. Joseph — What to Do', desc: "St. Joseph's feast is a solemnity. Open with his story as model of silent, faithful presence. Consider a brief prayer ritual around his image.", feast: 'Solemnity of St. Joseph' },
-    { type: 'anniversary', title: 'Program Anniversary', desc: 'Our online training center launched on this day five years ago. Thank you for being part of this community!' },
-  ],
-  '2026-3-22': [
-    { type: 'sunday', title: "Palm Sunday of the Lord's Passion", desc: '"In the procession and in the passion, Jesus is Lord. What do I wave palms for — and what cross do I not want to carry?"' },
-    { type: 'institute', title: 'Spring Institute — Registration Open', desc: 'Our Spring Institute runs April 18–20 in Cincinnati, OH. Early bird pricing ends March 31.', location: 'Cincinnati, OH', date: 'April 18–20' },
-  ],
-  '2026-3-25': [
-    { type: 'holyday', title: 'Annunciation — What to Do', desc: '"Let it be done to me." The Annunciation falls in Holy Week this year — a beautiful moment to reflect on Mary\'s yes as a model for the elect\'s own yes at the Vigil.', feast: 'Solemnity of the Annunciation' },
-  ],
-  '2026-3-26': [
-    { type: 'video', title: 'Reel: The Easter Vigil in 90 Seconds', desc: 'Share this quick overview video with your parish community and elect. Helps families understand what to expect at the Vigil.', hasVideo: true },
-  ],
-  '2026-3-29': [
-    { type: 'sunday', title: 'Easter Sunday — He Is Risen!', desc: 'Rejoice! The neophytes are fully initiated. Begin mystagogy. Reflection: "What surprised you most about the Vigil?"' },
-    { type: 'highlight', title: 'Member Highlight: Deacon Tom Reilly', desc: "Deacon Tom led 7 adults into the Church at the Easter Vigil this year at St. Brendan's in Seattle. Read his reflection on accompanying them through Lent." },
-    { type: 'faith', title: 'Faith·Life·Creed: Easter Session', desc: 'Our Easter mystagogy module is now available. Perfect for your first three Sunday neophyte gatherings.', hasLink: true },
-  ],
-  '2026-4-5': [
-    { type: 'sunday', title: 'Second Sunday of Easter', desc: '"Like Thomas, have you had a moment of doubt — and how did the community help you through it?"' },
-    { type: 'webinar', title: 'Webinar: Starting the New Inquiry Year', desc: 'Join us at 7pm CT — how to launch precatechumenate in spring and summer to build a strong fall cohort.', time: '7:00 PM CT' },
-  ],
-  '2026-4-12': [
-    { type: 'tip', title: 'Tip: Mystagogy Sessions', desc: 'Mystagogy works best when neophytes lead. Ask them: "What symbol from the Vigil still stays with you?" Let their experience drive the session.' },
-  ],
-  '2026-4-18': [
-    { type: 'institute', title: 'Spring Institute — Day 1', desc: 'Day 1 of the Spring Institute in Cincinnati. Keynote: The Catechumenate as Threshold Ministry.', location: 'Cincinnati, OH' },
-  ],
-  '2026-4-19': [{ type: 'institute', title: 'Spring Institute — Day 2', desc: 'Deep dive into Breaking Open the Word and sponsor formation. Workshop sessions begin at 9am.', location: 'Cincinnati, OH' }],
-  '2026-4-20': [{ type: 'institute', title: 'Spring Institute — Day 3', desc: 'Final day. Liturgical catechesis and sending rite. Certificate of completion presented at closing prayer.', location: 'Cincinnati, OH' }],
-  '2026-4-23': [
-    { type: 'parish', title: 'Parish Story: St. George, Louisville KY', desc: 'Today is the feast of St. George — name day for St. George Parish in Louisville, KY. Their team shares how they welcomed a family of refugees through the catechumenate this year.', feast: 'Feast of St. George' },
-  ],
-};
+// =====================================================
+// STATE
+// =====================================================
+let EVENTS = {};
+let currentYear = new Date().getFullYear();
+let currentMonth = new Date().getMonth() + 1;
+let currentView = 'month';
+const today = new Date();
 
+// =====================================================
+// LOAD DATA FROM GOOGLE SHEETS
+// =====================================================
+async function loadEvents() {
+  const loadingBar = document.getElementById('loadingBar');
+  const errorBar = document.getElementById('errorBar');
+
+  // If no URL configured yet, use sample data
+  if (SHEET_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    loadingBar.classList.add('hidden');
+    EVENTS = getSampleEvents();
+    render();
+    return;
+  }
+
+  try {
+    loadingBar.classList.remove('hidden');
+    errorBar.classList.remove('visible');
+
+    const response = await fetch(SHEET_URL);
+    if (!response.ok) throw new Error('Network response was not ok');
+    const rows = await response.json();
+
+    // Build EVENTS object from sheet rows
+    // Expected columns: Date (MM/DD/YYYY), Type, Title, Description, Time, Location, DateRange, FeastDay, HasVideo, HasLink
+    EVENTS = {};
+    rows.forEach(row => {
+      if (!row.Date || !row.Type || !row.Title) return; // skip empty/incomplete rows
+      const d = new Date(row.Date);
+      if (isNaN(d)) return; // skip invalid dates
+      const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+      if (!EVENTS[key]) EVENTS[key] = [];
+      EVENTS[key].push({
+        type:     (row.Type || 'tip').toLowerCase().trim(),
+        title:    row.Title || '',
+        desc:     row.Description || '',
+        time:     row.Time || '',
+        location: row.Location || '',
+        date:     row.DateRange || '',
+        feast:    row.FeastDay || '',
+        hasVideo: (row.HasVideo || '').toLowerCase() === 'yes',
+        hasLink:  (row.HasLink || '').toLowerCase() === 'yes',
+        videoUrl: row.VideoURL || '',
+        linkUrl:  row.LinkURL || '',
+      });
+    });
+
+    loadingBar.classList.add('hidden');
+    render();
+
+  } catch (err) {
+    loadingBar.classList.add('hidden');
+    errorBar.classList.add('visible');
+    errorBar.innerHTML = '⚠️ Could not load calendar events. Please check your connection or Apps Script URL. &nbsp;·&nbsp; <a href="#" onclick="loadEvents();return false;" style="color:#922030">Try again</a>';
+    // Fall back to sample data so calendar still shows something
+    EVENTS = getSampleEvents();
+    render();
+  }
+}
+
+// =====================================================
+// SAMPLE EVENTS (shown before Google Sheets is set up)
+// =====================================================
+function getSampleEvents() {
+  return {
+    '2026-3-1': [
+      { type: 'sunday', title: 'Third Sunday of Lent', desc: 'Reflection: "What are the dry places in my own life, and how is Christ offering me living water?" — Read John 4:5–42 with your catechumens.' },
+      { type: 'rite', title: 'First Scrutiny', desc: 'First Scrutiny — an excellent day to celebrate with your elect. Prepare the intercessions carefully and invite the assembly to embrace their role.' },
+    ],
+    '2026-3-5': [
+      { type: 'video', title: 'Reel: What is the Catechumenate?', desc: 'A 2-minute video to share with your parish about the beauty of the catechumenate process.', hasVideo: true },
+    ],
+    '2026-3-8': [
+      { type: 'sunday', title: 'Fourth Sunday of Lent — Laetare', desc: 'Reflection: "Where have I experienced God\'s compassionate gaze this Lent?" Rose vestments today!' },
+      { type: 'faith', title: 'Faith·Life·Creed Link', desc: 'Chapter 7 addresses the sacraments of initiation — a perfect companion for this week.', hasLink: true },
+    ],
+    '2026-3-12': [
+      { type: 'webinar', title: 'Webinar: Mystagogy That Sticks', desc: 'Join us live at 7pm CT.', time: '7:00 PM CT' },
+    ],
+    '2026-3-17': [
+      { type: 'parish', title: 'Parish Story: St. Patrick, Rolla MO', desc: 'Today is the feast of St. Patrick — name day for St. Patrick Parish in Rolla, MO.', feast: 'Feast of St. Patrick' },
+    ],
+    '2026-3-19': [
+      { type: 'holyday', title: 'Feast of St. Joseph — What to Do', desc: 'St. Joseph\'s feast is a solemnity. Open with his story as model of silent, faithful presence.', feast: 'Solemnity of St. Joseph' },
+    ],
+    '2026-3-22': [
+      { type: 'sunday', title: 'Palm Sunday', desc: '"In the procession and in the passion, Jesus is Lord."' },
+      { type: 'institute', title: 'Spring Institute — Registration Open', desc: 'Our Spring Institute runs April 18–20 in Cincinnati, OH.', location: 'Cincinnati, OH', date: 'April 18–20' },
+    ],
+    '2026-3-29': [
+      { type: 'sunday', title: 'Easter Sunday — He Is Risen!', desc: 'Rejoice! Begin mystagogy. Reflection: "What surprised you most about the Vigil?"' },
+      { type: 'highlight', title: 'Member Highlight: Deacon Tom Reilly', desc: 'Deacon Tom led 7 adults into the Church at the Easter Vigil this year.' },
+    ],
+    '2026-4-18': [{ type: 'institute', title: 'Spring Institute — Day 1', desc: 'Keynote: The Catechumenate as Threshold Ministry.', location: 'Cincinnati, OH' }],
+    '2026-4-19': [{ type: 'institute', title: 'Spring Institute — Day 2', desc: 'Breaking Open the Word and sponsor formation.', location: 'Cincinnati, OH' }],
+    '2026-4-20': [{ type: 'institute', title: 'Spring Institute — Day 3', desc: 'Final day. Certificate of completion presented at closing prayer.', location: 'Cincinnati, OH' }],
+  };
+}
+
+// =====================================================
+// LITURGICAL SEASONS
+// =====================================================
 function getSeasonClass(year, month, day) {
   if (month === 12 && day >= 1 && day < 25) return 'season-advent';
   if ((month === 12 && day >= 25) || month === 1 || (month === 2 && day < 3)) return 'season-christmas';
@@ -543,9 +652,9 @@ function getSeasonClass(year, month, day) {
   return 'season-ordinary';
 }
 
-let currentYear = 2026, currentMonth = 3, currentView = 'month';
-const today = new Date();
-
+// =====================================================
+// RENDER
+// =====================================================
 function render() {
   renderAdvent();
   if (currentView === 'month') renderMonth(); else renderList();
@@ -560,8 +669,10 @@ function renderAdvent() {
     const cols = ['#9b4dca','#9b4dca','#f0c040','#9b4dca'];
     const labs = ['Hope','Peace','Joy','Love'];
     const lit = Math.min(4, Math.floor(today.getDate()/7)+1);
-    cols.forEach((col,i)=>{ c.innerHTML+=`<div class="candle ${i<lit?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:${col};height:${40+i*6}px"></div><div class="candle-label">${labs[i]}</div></div>`; });
-    c.innerHTML+=`<div class="candle ${today.getDate()>=25?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:#FEF9F5;height:70px;width:20px;border:1px solid rgba(254,249,245,0.25)"></div><div class="candle-label">Christ</div></div>`;
+    cols.forEach((col,i) => {
+      c.innerHTML += `<div class="candle ${i<lit?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:${col};height:${40+i*6}px"></div><div class="candle-label">${labs[i]}</div></div>`;
+    });
+    c.innerHTML += `<div class="candle ${today.getDate()>=25?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:#FEF9F5;height:70px;width:20px;border:1px solid rgba(23,65,89,0.15)"></div><div class="candle-label">Christ</div></div>`;
   } else { strip.classList.remove('visible'); }
 }
 
@@ -573,65 +684,79 @@ function renderMonth() {
   const daysInMonth = new Date(currentYear,currentMonth,0).getDate();
   const prevDays = new Date(currentYear,currentMonth-1,0).getDate();
   const total = Math.ceil((firstDay+daysInMonth)/7)*7;
-  let cells='';
-  for(let i=0;i<total;i++){
-    let day,m=currentMonth,y=currentYear,other=false;
-    if(i<firstDay){day=prevDays-firstDay+i+1;m=currentMonth===1?12:currentMonth-1;y=currentMonth===1?currentYear-1:currentYear;other=true;}
-    else if(i>=firstDay+daysInMonth){day=i-firstDay-daysInMonth+1;m=currentMonth===12?1:currentMonth+1;y=currentMonth===12?currentYear+1:currentYear;other=true;}
-    else{day=i-firstDay+1;}
-    const isToday=!other&&day===today.getDate()&&currentMonth===today.getMonth()+1&&currentYear===today.getFullYear();
-    const isSun=(i%7===0);
-    const sc=getSeasonClass(y,m,day);
-    const key=`${y}-${m}-${day}`;
-    const evs=EVENTS[key]||[];
-    const pills=evs.slice(0,3).map(e=>{const t=EVENT_TYPES[e.type];return`<div class="event-pill ${t.cls}"><div class="pill-dot" style="background:${t.color}"></div>${e.title}</div>`;}).join('');
-    const more=evs.length>3?`<div class="more-badge">+${evs.length-3} more</div>`:'';
-    const feast=evs.find(e=>e.feast);
-    const sb=feast?`<span class="saint-badge">${feast.feast}</span>`:'';
-    cells+=`<div class="day-cell ${sc}${other?' other-month':''}${isToday?' today':''}${isSun?' sunday':''}${evs.length?' has-events':''}" onclick="${other?'':  `openDay(${y},${m},${day})`}">
+  let cells = '';
+  for (let i = 0; i < total; i++) {
+    let day, m = currentMonth, y = currentYear, other = false;
+    if (i < firstDay) { day=prevDays-firstDay+i+1; m=currentMonth===1?12:currentMonth-1; y=currentMonth===1?currentYear-1:currentYear; other=true; }
+    else if (i >= firstDay+daysInMonth) { day=i-firstDay-daysInMonth+1; m=currentMonth===12?1:currentMonth+1; y=currentMonth===12?currentYear+1:currentYear; other=true; }
+    else { day = i-firstDay+1; }
+    const isToday = !other && day===today.getDate() && currentMonth===today.getMonth()+1 && currentYear===today.getFullYear();
+    const isSun = (i%7===0);
+    const sc = getSeasonClass(y,m,day);
+    const key = `${y}-${m}-${day}`;
+    const evs = EVENTS[key] || [];
+    const pills = evs.slice(0,3).map(e => { const t=EVENT_TYPES[e.type]||EVENT_TYPES.tip; return `<div class="event-pill ${t.cls}"><div class="pill-dot" style="background:${t.color}"></div>${e.title}</div>`; }).join('');
+    const more = evs.length>3 ? `<div class="more-badge">+${evs.length-3} more</div>` : '';
+    const feast = evs.find(e=>e.feast);
+    const sb = feast ? `<span class="saint-badge">${feast.feast}</span>` : '';
+    cells += `<div class="day-cell ${sc}${other?' other-month':''}${isToday?' today':''}${isSun?' sunday':''}${evs.length?' has-events':''}" onclick="${other?'':  `openDay(${y},${m},${day})`}">
       <div class="day-num">${day}${sb}</div>${pills}${more}</div>`;
   }
-  grid.innerHTML=cells;
+  grid.innerHTML = cells;
 }
 
 function renderList() {
-  const grid=document.getElementById('calendarGrid');
-  grid.style.display='block';
-  document.getElementById('monthTitle').textContent=new Date(currentYear,currentMonth-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});
-  const all=[];
-  Object.entries(EVENTS).forEach(([k,evs])=>{const[y,m,d]=k.split('-').map(Number);if(y===currentYear&&m===currentMonth)evs.forEach(e=>all.push({day:d,...e}));});
+  const grid = document.getElementById('calendarGrid');
+  grid.style.display = 'block';
+  document.getElementById('monthTitle').textContent = new Date(currentYear,currentMonth-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'});
+  const all = [];
+  Object.entries(EVENTS).forEach(([k,evs]) => { const[y,m,d]=k.split('-').map(Number); if(y===currentYear&&m===currentMonth) evs.forEach(e=>all.push({day:d,...e})); });
   all.sort((a,b)=>a.day-b.day);
-  if(!all.length){grid.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-label);font-style:italic">No events this month.</div>';return;}
-  grid.innerHTML=all.map(e=>{const t=EVENT_TYPES[e.type];const dt=new Date(currentYear,currentMonth-1,e.day).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-  return`<div class="modal-event" style="margin-bottom:10px;cursor:pointer" onclick="openDay(${currentYear},${currentMonth},${e.day})">
-    <div class="modal-event-type" style="color:${t.color}"><div style="width:7px;height:7px;border-radius:50%;background:${t.color};flex-shrink:0"></div>${t.label} &nbsp;·&nbsp; <span style="color:var(--text-label);font-style:italic;font-weight:400;letter-spacing:0">${dt}</span></div>
-    <div class="modal-event-title">${e.title}</div>
-    <div class="modal-event-desc">${e.desc.substring(0,120)}…</div>
-  </div>`;}).join('');
+  if (!all.length) { grid.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-label);font-style:italic">No events this month.</div>'; return; }
+  grid.innerHTML = all.map(e => {
+    const t = EVENT_TYPES[e.type]||EVENT_TYPES.tip;
+    const dt = new Date(currentYear,currentMonth-1,e.day).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    return `<div class="modal-event" style="margin-bottom:10px;cursor:pointer" onclick="openDay(${currentYear},${currentMonth},${e.day})">
+      <div class="modal-event-type" style="color:${t.color}"><div style="width:7px;height:7px;border-radius:50%;background:${t.color};flex-shrink:0"></div>${t.label} &nbsp;·&nbsp; <span style="color:var(--text-label);font-style:italic;font-weight:400;letter-spacing:0">${dt}</span></div>
+      <div class="modal-event-title">${e.title}</div>
+      <div class="modal-event-desc">${e.desc.substring(0,120)}…</div>
+    </div>`;
+  }).join('');
 }
 
-function openDay(year,month,day){
-  const key=`${year}-${month}-${day}`;const evs=EVENTS[key];if(!evs||!evs.length)return;
-  document.getElementById('modalDate').textContent=new Date(year,month-1,day).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-  document.getElementById('modalTitle').textContent=evs.length===1?evs[0].title:`${evs.length} Events Today`;
-  let body='';
-  evs.forEach(e=>{const t=EVENT_TYPES[e.type];
-    const vid=e.hasVideo?`<div class="video-placeholder"><div class="play-icon">▶</div><span>Video preview available to members</span></div>`:'';
-    const lnk=e.hasLink?`<span class="modal-event-link">📖 Open in Faith·Life·Creed →</span>`:'';
-    const tm=e.time?`<div class="modal-meta">🕐 ${e.time}</div>`:'';
-    const loc=e.location?`<div class="modal-meta">📍 ${e.location}</div>`:'';
-    const dt=e.date?`<div class="modal-meta">📅 ${e.date}</div>`:'';
-    body+=`<div class="modal-event"><div class="modal-event-type" style="color:${t.color}"><div style="width:7px;height:7px;border-radius:50%;background:${t.color};flex-shrink:0"></div>${t.label}</div>
-    <div class="modal-event-title">${e.title}</div>${tm}${loc}${dt}<div class="modal-event-desc">${e.desc}</div>${vid}${lnk}</div>`;
+function openDay(year,month,day) {
+  const key = `${year}-${month}-${day}`;
+  const evs = EVENTS[key];
+  if (!evs || !evs.length) return;
+  document.getElementById('modalDate').textContent = new Date(year,month-1,day).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('modalTitle').textContent = evs.length===1 ? evs[0].title : `${evs.length} Events Today`;
+  let body = '';
+  evs.forEach(e => {
+    const t = EVENT_TYPES[e.type]||EVENT_TYPES.tip;
+    const vid = e.hasVideo ? `<div class="video-placeholder">${e.videoUrl ? `<a href="${e.videoUrl}" target="_blank" style="text-decoration:none"><div class="play-icon">▶</div><span style="color:var(--teal)">Watch Video →</span></a>` : `<div class="play-icon">▶</div><span>Video available to members</span>`}</div>` : '';
+    const lnk = e.hasLink ? `<a href="${e.linkUrl||'#'}" target="_blank" class="modal-event-link">📖 Open in Faith·Life·Creed →</a>` : '';
+    const tm  = e.time     ? `<div class="modal-meta">🕐 ${e.time}</div>` : '';
+    const loc = e.location ? `<div class="modal-meta">📍 ${e.location}</div>` : '';
+    const dt  = e.date     ? `<div class="modal-meta">📅 ${e.date}</div>` : '';
+    body += `<div class="modal-event">
+      <div class="modal-event-type" style="color:${t.color}"><div style="width:7px;height:7px;border-radius:50%;background:${t.color};flex-shrink:0"></div>${t.label}</div>
+      <div class="modal-event-title">${e.title}</div>
+      ${tm}${loc}${dt}
+      <div class="modal-event-desc">${e.desc}</div>
+      ${vid}${lnk}
+    </div>`;
   });
-  document.getElementById('modalBody').innerHTML=body;
+  document.getElementById('modalBody').innerHTML = body;
   document.getElementById('modalOverlay').classList.add('open');
 }
-function closeModal(e){if(e.target===document.getElementById('modalOverlay'))closeModalDirect();}
-function closeModalDirect(){document.getElementById('modalOverlay').classList.remove('open');}
-function changeMonth(dir){currentMonth+=dir;if(currentMonth>12){currentMonth=1;currentYear++;}if(currentMonth<1){currentMonth=12;currentYear--;}render();}
-function setView(v,btn){currentView=v;document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
-render();
+
+function closeModal(e) { if(e.target===document.getElementById('modalOverlay')) closeModalDirect(); }
+function closeModalDirect() { document.getElementById('modalOverlay').classList.remove('open'); }
+function changeMonth(dir) { currentMonth+=dir; if(currentMonth>12){currentMonth=1;currentYear++;} if(currentMonth<1){currentMonth=12;currentYear--;} render(); }
+function setView(v,btn) { currentView=v; document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); render(); }
+
+// Start by loading events
+loadEvents();
 </script>
 </body>
 </html>
