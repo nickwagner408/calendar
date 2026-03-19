@@ -14,7 +14,7 @@
     --buttermilk:  #FEF2B7;
     --cream:       #FEF9F5;
     --soft-mint:   #E8F8F5;
-    --bg:          #FEF9F5;
+    --bg:          #15A4A3;
     --bg-card:     rgba(23,65,89,0.72);
     --bg-card-hover: rgba(23,65,89,0.96);
     --border:      rgba(21,164,163,0.18);
@@ -572,7 +572,7 @@ function renderAdvent() {
     const labs = ['Hope','Peace','Joy','Love'];
     const lit = Math.min(4, Math.floor(today.getDate()/7)+1);
     cols.forEach((col,i)=>{ c.innerHTML+=`<div class="candle ${i<lit?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:${col};height:${40+i*6}px"></div><div class="candle-label">${labs[i]}</div></div>`; });
-    c.innerHTML+=`<div class="candle ${today.getDate()>=25?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:#FEF9F5;height:70px;width:20px;border:1px solid rgba(254,249,245,0.25)"></div><div class="candle-label">Christ</div></div>`;
+    c.innerHTML+=`<div class="candle ${today.getDate()>=25?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:;height:70px;width:20px;border:1px solid rgba(254,249,245,0.25)"></div><div class="candle-label">Christ</div></div>`;
   } else { strip.classList.remove('visible'); }
 }
 
