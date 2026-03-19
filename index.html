@@ -198,11 +198,11 @@
   .day-cell.sunday .day-num { color: var(--teal); }
 
   /* Liturgical season tints */
-  .season-advent    { background: linear-gradient(145deg, rgba(110,60,150,0.18) 0%, rgba(23,65,89,0.72) 100%); }
+  .season-advent    { background: linear-gradient(145deg, rgba(110,60,150,0.18) 0%, rgba(128,0,128,0.72) 100%); }
   .season-christmas { background: linear-gradient(145deg, rgba(190,150,30,0.16) 0%, rgba(23,65,89,0.72) 100%); }
-  .season-lent      { background: linear-gradient(145deg, rgba(90,40,70,0.20) 0%, rgba(23,65,89,0.72) 100%); }
-  .season-easter    { background: linear-gradient(145deg, rgba(210,185,20,0.14) 0%, rgba(23,65,89,0.72) 100%); }
-  .season-ordinary  { background: linear-gradient(145deg, rgba(21,164,163,0.10) 0%, rgba(23,65,89,0.72) 100%); }
+  .season-lent      { background: linear-gradient(145deg, rgba(90,40,70,0.20) 0%, rgba(125,40,125,0.72) 100%); }
+  .season-easter    { background: linear-gradient(145deg, rgba(210,185,20,0.14) 0%, rgba(25,25,25,0.72) 100%); }
+  .season-ordinary  { background: linear-gradient(145deg, rgba(21,164,163,0.10) 0%, rgba(24,100,32,0.72) 100%); }
 
   .day-num {
     font-family: 'Comfortaa', sans-serif; font-weight: 600;
@@ -395,7 +395,7 @@
 </header>
 
 <div class="advent-strip" id="adventStrip">
-  <h3>✦ Advent Calendar</h3>
+  <h3>? Advent Calendar</h3>
   <div class="advent-candles" id="adventCandles"></div>
 </div>
 
@@ -445,8 +445,8 @@
 </div>
 
 <div class="subscribe-bar">
-  <button class="sub-btn" onclick="alert('In the live version, this adds the calendar to Google, Apple, or Outlook.')">📅 Subscribe to Calendar</button>
-  <button class="sub-btn" onclick="alert('In the live version, this downloads an .ics file for import.')">⬇ Download .ics</button>
+  <button class="sub-btn" onclick="alert('In the live version, this adds the calendar to Google, Apple, or Outlook.')">?? Subscribe to Calendar</button>
+  <button class="sub-btn" onclick="alert('In the live version, this downloads an .ics file for import.')">? Download .ics</button>
   <span class="sub-text">Sync events to your personal calendar</span>
 </div>
 
@@ -457,7 +457,7 @@
         <div class="modal-date" id="modalDate"></div>
         <div class="modal-title" id="modalTitle"></div>
       </div>
-      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      <button class="modal-close" onclick="closeModalDirect()">?</button>
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>
@@ -627,11 +627,11 @@ function openDay(year,month,day){
   document.getElementById('modalTitle').textContent=evs.length===1?evs[0].title:`${evs.length} Events Today`;
   let body='';
   evs.forEach(e=>{const t=EVENT_TYPES[e.type];
-    const vid=e.hasVideo?`<div class="video-placeholder"><div class="play-icon">▶</div><span>Video preview available to members</span></div>`:'';
-    const lnk=e.hasLink?`<span class="modal-event-link">📖 Open in Faith·Life·Creed →</span>`:'';
-    const tm=e.time?`<div class="modal-meta">🕐 ${e.time}</div>`:'';
-    const loc=e.location?`<div class="modal-meta">📍 ${e.location}</div>`:'';
-    const dt=e.date?`<div class="modal-meta">📅 ${e.date}</div>`:'';
+    const vid=e.hasVideo?`<div class="video-placeholder"><div class="play-icon">?</div><span>Video preview available to members</span></div>`:'';
+    const lnk=e.hasLink?`<span class="modal-event-link">?? Open in Faith·Life·Creed ?</span>`:'';
+    const tm=e.time?`<div class="modal-meta">?? ${e.time}</div>`:'';
+    const loc=e.location?`<div class="modal-meta">?? ${e.location}</div>`:'';
+    const dt=e.date?`<div class="modal-meta">?? ${e.date}</div>`:'';
     body+=`<div class="modal-event"><div class="modal-event-type" style="color:${t.color}"><div style="width:7px;height:7px;border-radius:50%;background:${t.color};flex-shrink:0"></div>${t.label}</div>
     <div class="modal-event-title">${e.title}</div>${tm}${loc}${dt}<div class="modal-event-desc">${e.desc}</div>${vid}${lnk}</div>`;
   });
