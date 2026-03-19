@@ -15,12 +15,12 @@
     --cream:       #FEF9F5;
     --soft-mint:   #E8F8F5;
     --bg:          #15A4A3;
-    --bg-card:     rgba(23,65,89,0.72);
+    --bg-card:     rgba(10,130,130,0.25);
     --bg-card-hover: rgba(23,65,89,0.96);
     --border:      rgba(21,164,163,0.18);
-    --text-main:   #FEF9F5;
-    --text-muted:  rgba(254,249,245,0.6);
-    --text-label:  rgba(254,249,245,0.4);
+    --text-main:   #174159;
+    --text-muted:  rgba(23,65,89,0.75);
+--text-label:  rgba(23,65,89,0.5);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -46,7 +46,7 @@
     align-items: center;
     gap: 16px;
     padding: 20px 28px 18px;
-    background: linear-gradient(135deg, #0c2334 0%, #15A4A3 100%);
+    background: linear-gradient(135deg, #0c2334 0%, #FEF9F5 100%);
     border-bottom: 2px solid rgba(21,164,163,0.28);
     flex-wrap: wrap;
   }
@@ -248,7 +248,7 @@
   }
   .modal-overlay.open { display: flex; }
   .modal {
-    background: linear-gradient(150deg, #1a4d68 0%, #15A4A3 100%);
+    background: linear-gradient(150deg, #1a4d68 0%, #15A4A3; 100%);
     border: 1px solid rgba(21,164,163,0.35);
     border-radius: 14px; width: 100%; max-width: 560px;
     max-height: 85vh; overflow-y: auto;
@@ -572,7 +572,7 @@ function renderAdvent() {
     const labs = ['Hope','Peace','Joy','Love'];
     const lit = Math.min(4, Math.floor(today.getDate()/7)+1);
     cols.forEach((col,i)=>{ c.innerHTML+=`<div class="candle ${i<lit?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:${col};height:${40+i*6}px"></div><div class="candle-label">${labs[i]}</div></div>`; });
-    c.innerHTML+=`<div class="candle ${today.getDate()>=25?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:;height:70px;width:20px;border:1px solid rgba(254,249,245,0.25)"></div><div class="candle-label">Christ</div></div>`;
+    c.innerHTML+=`<div class="candle ${today.getDate()>=25?'lit':''}"><div class="candle-flame"></div><div class="candle-body" style="background:#FEF9F5;height:70px;width:20px;border:1px solid rgba(254,249,245,0.25)"></div><div class="candle-label">Christ</div></div>`;
   } else { strip.classList.remove('visible'); }
 }
 
